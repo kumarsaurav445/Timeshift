@@ -1,11 +1,6 @@
 import dispatcher from "../dispatcher";
 import $ from 'jquery';
-export function createTodo(text) {
-  dispatcher.dispatch({
-    type: "CREATE_TODO",
-    text,
-  });
-}
+
 
 export function deleteTodo(id) {
   dispatcher.dispatch({
@@ -14,30 +9,32 @@ export function deleteTodo(id) {
   });
 }
 
-export function reloadTodos() {
-  var xhttp = new XMLHttpRequest();
-  xhttp.open("get","http://10.24.64.62:1212/create",true);
-  xhttp.setRequestHeader("Content-type","application/json"); 
-  xhttp.send();
-  xhttp.onreadystatechange = function(){
-      if(this.readyState == 4 ){
-          var response = JSON.parse(xhttp.responseText);
-          console.log("data", response);
-      dispatcher.dispatch({type: "RECEIVE_TODOS", data: response});
-      }
-    }  
+export function createSnapshot() {
+  var response;
+  var url= "http://" + window.location.hostname +":1212/create";
+  $.ajax({
+    url: url,
+    cache: false,
+    success: function (ret, textStatus, jqXHR) {
+      if(jqXHR.status == 200 && ret!= undefined){
+        response = ret;
+      }        
+    dispatcher.dispatch({type: "Create_Snapshot", data: response});
+    }
+  });
 }
 
 export function listAll() {
   var response;
+  var url= "http://" + window.location.hostname +":1212/list";
   $.ajax({
-      url: "http://10.24.64.62:1212/list",
+      url: url,
       cache: false,
       success: function (ret, textStatus, jqXHR) {
 				if(jqXHR.status == 200 && ret!= undefined){
           response = ret;
         }        
-      dispatcher.dispatch({type: "List_Data", data: response});
+      dispatcher.dispatch({type: "List_Snapshot", data: response});
 			}
     });       
 }

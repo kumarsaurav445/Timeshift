@@ -38,8 +38,8 @@ export default class Todos extends React.Component {
     });
   }
 
-  reloadTodos() {
-    TodoActions.reloadTodos();
+  createSnapshot() {
+    TodoActions.createSnapshot();
   }
 
   button(){ 

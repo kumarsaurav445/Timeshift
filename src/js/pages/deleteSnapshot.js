@@ -23,7 +23,7 @@ export default class Todos extends React.Component {
    $(document).ready(function(){
     $("#close").click(function(){
       $("#popup").hide();
-      window.location.href = "http://localhost:8080";
+      window.location.href = "http://" + window.location.hostname +":8080";
     });
   })
   }
@@ -37,10 +37,6 @@ export default class Todos extends React.Component {
     this.setState({
       todos: PythonStore.getAll(),
     });
-  }
-
-  reloadTodos() {
-    TodoActions.reloadTodos();
   }
 
   button(){ 

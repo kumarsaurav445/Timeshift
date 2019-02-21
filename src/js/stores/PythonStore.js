@@ -9,18 +9,6 @@ class PythonStore extends EventEmitter {
     this.list = [];
   }
 
-  createTodo(text) {
-    const id = Date.now();
-
-    this.todos.push({
-      id,
-      text,
-      complete: false,
-    });
-
-    this.emit("change");
-  }
-
   getAll() {
     return this.todos;
   }
@@ -37,12 +25,12 @@ class PythonStore extends EventEmitter {
         this.createTodo(action.text);
         break;
       }
-      case "RECEIVE_TODOS": {
+      case "Create_Snapshot": {
         this.todos = action.data;
         this.emit("change");
         break;
       }
-      case "List_Data": {
+      case "List_Snapshot": {
         this.list = action.data;
         this.emit("change");
         break;
